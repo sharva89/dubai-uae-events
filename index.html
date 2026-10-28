@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dubai & UAE Events 2026–27</title>
+<meta name="description" content="Conferences, festivals, sports, concerts and culture that bring visitors to Dubai and the UAE, November 2026 to October 2027. Curated by Experiential Tales.">
+<meta property="og:title" content="Dubai & UAE Events 2026–27">
+<meta property="og:description" content="88 conferences, festivals, sports fixtures, concerts and cultural events across the Emirates, November 2026 to October 2027.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#011B36">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Poppins:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="masthead">
+  <div class="wrap masthead-inner">
+    <p class="eyebrow">Experiential Tales · Events calendar</p>
+    <h1>Dubai &amp; UAE <em>Events</em></h1>
+    <p class="lede">What brings visitors to the Emirates from <strong>November 2026 to October 2027</strong>: conferences, festivals, sport, concerts and culture, with official links and flyers.</p>
+    <p class="meta" id="summary">Loading events…</p>
+  </div>
+</header>
+
+<div class="toolbar" id="toolbar">
+  <div class="wrap toolbar-inner">
+    <div class="view-toggle" role="tablist" aria-label="View">
+      <button type="button" role="tab" id="view-calendar" data-view="calendar" aria-selected="true">Calendar</button>
+      <button type="button" role="tab" id="view-list" data-view="list" aria-selected="false">List</button>
+    </div>
+    <div class="types" id="type-filters" aria-label="Filter by type"></div>
+    <div class="finders">
+      <label class="sr-only" for="city">City</label>
+      <select id="city"><option value="">All cities</option></select>
+      <label class="sr-only" for="search">Search events</label>
+      <input id="search" type="search" placeholder="Search events or venues" autocomplete="off">
+    </div>
+  </div>
+  <nav class="wrap months" id="months" aria-label="Months"></nav>
+</div>
+
+<main class="wrap" id="main">
+  <section id="calendar" aria-live="polite"></section>
+  <section id="list" hidden></section>
+  <p class="empty" id="empty" hidden>No events match these filters. <button type="button" id="reset">Clear filters</button></p>
+</main>
+
+<footer class="wrap footer">
+  <div class="legend" id="legend"></div>
+  <p>Dates come from organisers' sites and official tourism listings as of 28 October 2026. Several 2026 events were postponed because of the regional situation, and dates marked <em>TBC</em> or <em>expected</em> may change, so check the official link before you book. Islamic holidays follow the moon sighting.</p>
+  <p><a href="data/events.csv">Download the full list (CSV)</a> · Curated by Experiential Tales</p>
+</footer>
+
+<dialog id="detail" aria-labelledby="d-title">
+  <article class="detail">
+    <button type="button" class="close" id="d-close" aria-label="Close">×</button>
+    <p class="d-type" id="d-type"></p>
+    <h2 id="d-title"></h2>
+    <dl class="d-facts">
+      <div><dt>When</dt><dd id="d-dates"></dd></div>
+      <div><dt>Where</dt><dd id="d-where"></dd></div>
+      <div><dt>Status</dt><dd id="d-status"></dd></div>
+    </dl>
+    <p class="d-about" id="d-about"></p>
+    <div class="d-actions">
+      <a id="d-link" class="btn primary" target="_blank" rel="noopener"></a>
+      <button type="button" class="btn" id="d-copy">Copy link to this event</button>
+    </div>
+    <section class="d-flyers">
+      <h3>Flyers</h3>
+      <div id="d-flyers"></div>
+    </section>
+  </article>
+</dialog>
+
+<script src="assets/app.js"></script>
+</body>
+</html>
