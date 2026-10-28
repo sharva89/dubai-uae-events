@@ -38,6 +38,8 @@ Each row of `data/events.csv` is one event:
 | `link` | Official website |
 | `link_kind` | `official`, `venue` or `guide` (sets the button label) |
 | `about` | One or two sentences |
+| `details` | Practical info shown under "Good to know": times, tickets, entry rules |
+| `part_of` | The `id` of a bigger event this belongs to (e.g. a concert night `part_of` the Grand Prix). The two events then link to each other |
 | `flyers` | Flyer filenames, see above |
 
 Peak hotel-demand dates (gold ★ days) are set in `assets/app.js` under `highDemand`.

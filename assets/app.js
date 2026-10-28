@@ -37,6 +37,7 @@ const DAY = 86400000;
 
 const state = { view: "calendar", month: 0, types: new Set(Object.keys(CONFIG.types)), city: "", q: "" };
 let EVENTS = [];
+let byId = {};
 let current = null;
 
 const $ = (id) => document.getElementById(id);
@@ -112,7 +113,7 @@ function matches(e) {
   if (!state.types.has(e.type)) return false;
   if (state.city && !e.city.includes(state.city)) return false;
   if (state.q) {
-    const hay = `${e.event} ${e.venue} ${e.city} ${e.about} ${e.type}`.toLowerCase();
+    const hay = `${e.event} ${e.venue} ${e.city} ${e.about} ${e.details} ${e.type}`.toLowerCase();
     if (!state.q.toLowerCase().split(/\s+/).every((w) => hay.includes(w))) return false;
   }
   return true;
@@ -261,6 +262,7 @@ function card(e) {
       el("p", { class: "about" }, e.about),
       el("div", { class: "tags" },
         el("span", { class: "tag" }, CONFIG.types[e.type].label),
+        e.part_of && byId[e.part_of] ? el("span", { class: "tag parent" }, `Part of ${byId[e.part_of].event}`) : null,
         e.status ? el("span", { class: `tag status${warnStatus(e.status) ? " warn" : ""}` }, e.status) : null,
         isPeakEvent(e) && !e.ongoing ? el("span", { class: "tag peak" }, "★ Peak hotel dates") : null)),
     el("div", { class: "side" },
@@ -300,6 +302,25 @@ function openEvent(e) {
   $("d-where").textContent = where(e);
   $("d-status").textContent = e.status || "Listed";
   $("d-about").textContent = e.about;
+
+  const parent = e.part_of && byId[e.part_of];
+  $("d-parent").hidden = !parent;
+  if (parent) $("d-parent").replaceChildren("Part of ", el("button", { type: "button", onclick: () => openEvent(parent) }, parent.event));
+
+  $("d-details").hidden = !e.details;
+  $("d-details-text").textContent = e.details || "";
+
+  // Children of this event, or the other events that share its parent
+  const kids = EVENTS.filter((x) => x.part_of === e.id);
+  const sibs = parent ? EVENTS.filter((x) => x.part_of === parent.id && x !== e) : [];
+  const related = kids.length ? kids : sibs;
+  $("d-related").hidden = !related.length;
+  $("d-related-title").textContent = kids.length ? "Events within this" : `Also part of ${parent ? parent.event : ""}`;
+  $("d-related-list").replaceChildren(...related.sort((a, b) => a.start - b.start).map((x) =>
+    el("li", { class: x.cls }, el("span", { class: "sw" }),
+      el("button", { type: "button", onclick: () => openEvent(x) }, x.event),
+      el("span", { class: "when" }, fmtRange(x)))));
+
   const link = $("d-link");
   link.hidden = !e.link;
   if (e.link) {
@@ -370,6 +391,7 @@ async function init() {
     const res = await fetch(CONFIG.csv, { cache: "no-cache" });
     if (!res.ok) throw new Error(res.status);
     EVENTS = parseCSV(await res.text()).map(prepare).filter(Boolean);
+    byId = Object.fromEntries(EVENTS.map((e) => [e.id, e]));
   } catch (err) {
     $("summary").textContent = "The event list could not be loaded. Refresh the page to try again.";
     return;
