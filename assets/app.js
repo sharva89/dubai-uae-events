@@ -361,16 +361,18 @@ function openEvent(e) {
         return el("figure", {},
           isImage(f)
             ? el("a", { href: f, target: "_blank", rel: "noopener" }, el("img", { src: f, alt: `${e.event} flyer ${i + 1}`, loading: "lazy" }))
-            : el("a", { class: "doc", href: f, target: "_blank", rel: "noopener" }, `Open flyer ${i + 1} ↗`),
+            : el("a", { class: "doc", href: f, target: "_blank", rel: "noopener" }, /\.pdf(\?.*)?$/i.test(f) ? "Open PDF ↗" : `Open flyer ${i + 1} ↗`),
           src ? el("figcaption", {}, src.label) : null);
       }))
     : el("p", { class: "no-flyer" }, "Flyers for this event are coming soon."));
 
   $("d-designs-wrap").hidden = !e.designs.length;
   $("d-designs").replaceChildren(...e.designs.map((d) => {
-    const n = e.flyers.filter((f) => sourceOf(f) === d).length;
+    const mine = e.flyers.filter((f) => sourceOf(f) === d);
+    const n = mine.filter(isImage).length, pdfs = mine.length - n;
+    const count = [n ? `${n} poster${n > 1 ? "s" : ""}` : "", pdfs ? "PDF" : ""].filter(Boolean).join(" + ");
     return el("li", {},
-      el("div", {}, el("strong", {}, d.label), n ? el("span", { class: "count" }, ` · ${n} poster${n > 1 ? "s" : ""}`) : null),
+      el("div", {}, el("strong", {}, d.label), count ? el("span", { class: "count" }, ` · ${count}`) : null),
       el("a", { class: "btn", href: d.url, target: "_blank", rel: "noopener" }, `Open in ${d.label} ↗`));
   }));
   if (location.hash !== `#${e.id}`) history.replaceState(null, "", `#${e.id}`);
