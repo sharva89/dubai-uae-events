@@ -41,6 +41,7 @@ Each row of `data/events.csv` is one event:
 | `details` | Practical info shown under "Good to know": times, tickets, entry rules |
 | `part_of` | The `id` of a bigger event this belongs to (e.g. a concert night `part_of` the Grand Prix). The two events then link to each other |
 | `flyers` | Flyer filenames, see above |
+| `designs` | Links to the editable source designs, as `Label\|URL`, several separated by `;` — e.g. `Canva\|https://www.canva.com/design/…/edit;Adobe Express\|https://new.express.adobe.com/id/…`. Shown under "Editable designs"; a flyer whose filename contains the label's last word (`canva`, `express`) is captioned with that source |
 
 Peak hotel-demand dates (gold ★ days) are set in `assets/app.js` under `highDemand`.
 

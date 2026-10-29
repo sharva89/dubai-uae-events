@@ -91,9 +91,14 @@ function prepare(r) {
   const type = CONFIG.types[r.type] ? r.type : "Festival";
   const flyers = (r.flyers || "").split(/[;\n|]/).map((s) => s.trim()).filter(Boolean)
     .map((f) => (/^https?:\/\//.test(f) ? f : CONFIG.flyerDir + f.replace(/^\/?flyers\//, "")));
+  // Editable source designs, written as "Label|URL;Label|URL"
+  const designs = (r.designs || "").split(";").map((s) => s.trim()).filter(Boolean).map((s) => {
+    const [label, url] = s.includes("|") ? s.split("|").map((x) => x.trim()) : ["Design", s];
+    return { label, url, key: label.toLowerCase().split(/\s+/).pop() };
+  }).filter((d) => /^https?:\/\//.test(d.url));
   const tbc = /^dates tbc/i.test(r.status || "");
   const days = Math.round((end - start) / DAY) + 1;
-  return { ...r, start, end, type, flyers, tbc, days, ongoing: tbc || days > 20, cls: CONFIG.types[type].cls };
+  return { ...r, start, end, type, flyers, designs, tbc, days, ongoing: tbc || days > 20, cls: CONFIG.types[type].cls };
 }
 
 const peakSet = new Set();
@@ -347,12 +352,27 @@ function openEvent(e) {
     link.title = host;
   }
   $("d-copy").textContent = "Copy link to this event";
+  // A flyer belongs to a design when its filename contains the design's last word ("canva", "express")
+  const sourceOf = (f) => e.designs.find((d) => f.toLowerCase().split("/").pop().includes(d.key));
   const box = $("d-flyers");
   box.replaceChildren(e.flyers.length
-    ? el("div", { class: "flyer-grid" }, e.flyers.map((f, i) => isImage(f)
-        ? el("a", { href: f, target: "_blank", rel: "noopener" }, el("img", { src: f, alt: `${e.event} flyer ${i + 1}`, loading: "lazy" }))
-        : el("a", { class: "doc", href: f, target: "_blank", rel: "noopener" }, `Open flyer ${i + 1} ↗`)))
+    ? el("div", { class: "flyer-grid" }, e.flyers.map((f, i) => {
+        const src = sourceOf(f);
+        return el("figure", {},
+          isImage(f)
+            ? el("a", { href: f, target: "_blank", rel: "noopener" }, el("img", { src: f, alt: `${e.event} flyer ${i + 1}`, loading: "lazy" }))
+            : el("a", { class: "doc", href: f, target: "_blank", rel: "noopener" }, `Open flyer ${i + 1} ↗`),
+          src ? el("figcaption", {}, src.label) : null);
+      }))
     : el("p", { class: "no-flyer" }, "Flyers for this event are coming soon."));
+
+  $("d-designs-wrap").hidden = !e.designs.length;
+  $("d-designs").replaceChildren(...e.designs.map((d) => {
+    const n = e.flyers.filter((f) => sourceOf(f) === d).length;
+    return el("li", {},
+      el("div", {}, el("strong", {}, d.label), n ? el("span", { class: "count" }, ` · ${n} poster${n > 1 ? "s" : ""}`) : null),
+      el("a", { class: "btn", href: d.url, target: "_blank", rel: "noopener" }, `Open in ${d.label} ↗`));
+  }));
   if (location.hash !== `#${e.id}`) history.replaceState(null, "", `#${e.id}`);
   if (!d.open) d.showModal();
 }

@@ -195,6 +195,14 @@ dialog::backdrop { background: rgba(1, 27, 54, .55); }
 .flyer-grid a { display: block; border-radius: 8px; overflow: hidden; border: 1px solid var(--line); background: var(--sand); }
 .flyer-grid img { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
 .flyer-grid .doc { display: grid; place-items: center; aspect-ratio: 4 / 5; padding: 12px; text-align: center; font-size: 13px; text-decoration: none; }
+.flyer-grid figure { margin: 0; }
+.flyer-grid figcaption { margin-top: 5px; font-size: 11.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); }
+.d-designs { margin-top: 22px; }
+.d-designs h3 { margin: 0 0 6px; font: 600 13px var(--body); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); }
+.d-note { margin: 0 0 10px; font-size: 13px; color: var(--ink-soft); }
+.d-designs ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+.d-designs li { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; padding: 10px 14px; border: 1px solid var(--line); border-radius: 10px; }
+.d-designs .count { color: var(--ink-soft); font-size: 13px; }
 .no-flyer { margin: 0; padding: 18px; border: 1px dashed var(--line); border-radius: 10px; color: var(--ink-soft); font-size: 13.5px; }
 
 @media (max-width: 760px) {
