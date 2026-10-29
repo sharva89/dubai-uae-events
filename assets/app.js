@@ -375,6 +375,7 @@ function openEvent(e) {
       el("div", {}, el("strong", {}, d.label), count ? el("span", { class: "count" }, ` · ${count}`) : null),
       el("a", { class: "btn", href: d.url, target: "_blank", rel: "noopener" }, `Open in ${d.label} ↗`));
   }));
+  $("d-cobrand").href = `studio.html?event=${encodeURIComponent(e.id)}`;
   if (location.hash !== `#${e.id}`) history.replaceState(null, "", `#${e.id}`);
   if (!d.open) d.showModal();
 }

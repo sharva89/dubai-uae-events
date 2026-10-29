@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Agent Partners</title>
+<meta name="description" content="Experiential Tales agent partners: logos, taglines and contacts used for co-branded posters and brochures.">
+<meta name="theme-color" content="#011B36">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Poppins:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="assets/style.css?v=20261029">
+<link rel="stylesheet" href="assets/cobrand.css?v=20261029">
+</head>
+<body>
+<header class="masthead">
+  <div class="wrap masthead-inner">
+    <nav class="site-nav" aria-label="Site">
+      <a href="./">Events calendar</a>
+      <a href="partners.html" aria-current="page">Partners</a>
+      <a href="studio.html">Co-brand Studio</a>
+    </nav>
+    <p class="eyebrow">Experiential Tales · Agent partners</p>
+    <h1>Our <em>Partners</em></h1>
+    <p class="lede">The agents we co-brand with. Each partner's logo, tagline and contacts feed the <a href="studio.html">Co-brand Studio</a>, which turns any of our posters or brochures into a <strong>[partner] × Experiential Tales</strong> version.</p>
+  </div>
+</header>
+
+<div class="toolbar">
+  <div class="wrap toolbar-inner">
+    <label class="sr-only" for="q">Search partners</label>
+    <input id="q" type="search" placeholder="Search by name, city or tagline" autocomplete="off">
+    <p class="count" id="count" aria-live="polite">Loading partners…</p>
+    <button type="button" class="btn primary" id="add">+ Add partner</button>
+  </div>
+</div>
+
+<main class="wrap" id="main">
+  <p class="notice" id="api-note" hidden>GitHub's partner listing isn't reachable right now, so this shows the partners in <code>partners/index.json</code> only.</p>
+  <div class="partner-grid" id="grid"></div>
+  <div class="empty-state" id="empty" hidden>
+    <h2>No partners yet</h2>
+    <p>Add the first agent partner: their logo, tagline and contact details. It takes about a minute.</p>
+    <button type="button" class="btn primary" data-add>+ Add partner</button>
+  </div>
+  <p class="empty" id="nomatch" hidden>No partners match “<span id="nomatch-q"></span>”.</p>
+</main>
+
+<footer class="wrap footer">
+  <p>Partner details live in the <a href="https://github.com/sharva89/dubai-uae-events/tree/main/partners" target="_blank" rel="noopener">partners folder on GitHub</a>, one <code>.json</code> file and one logo per partner. To remove a partner, delete both files there.</p>
+</footer>
+
+<dialog id="editor" aria-labelledby="ed-title">
+  <form class="detail editor" id="form" method="dialog" novalidate>
+    <button type="button" class="close" id="ed-close" aria-label="Close">×</button>
+    <p class="d-type" id="ed-kind">New partner</p>
+    <h2 id="ed-title">Add an agent partner</h2>
+
+    <div id="step-form">
+      <div class="logo-field">
+        <div class="logo-drop" id="drop">
+          <input type="file" id="logo" accept="image/png,image/jpeg,image/webp,image/svg+xml">
+          <canvas id="logo-preview" width="600" height="300" hidden></canvas>
+          <p id="drop-hint"><strong>Choose the partner's logo</strong><br>PNG with a transparent background works best. JPG, WebP and SVG are fine too. We trim empty space and resize it automatically.</p>
+        </div>
+        <div class="chip-check" id="chip-check" hidden>
+          <span>How it sits on our designs:</span>
+          <span class="chip-sample light"><img alt="" id="sample-light"></span>
+          <span class="chip-sample dark"><img alt="" id="sample-dark"></span>
+          <button type="button" class="linkish" id="logo-change">Change logo</button>
+        </div>
+      </div>
+
+      <div class="fields">
+        <label class="wide"><span>Partner name <span class="req">required</span></span>
+          <input name="name" required autocomplete="organization" placeholder="e.g. Skyline Holidays">
+        </label>
+        <label class="wide">Tagline
+          <input name="tagline" placeholder="e.g. Luxury journeys since 1998">
+        </label>
+        <label>Contact person
+          <input name="contact_name" autocomplete="name" placeholder="Name, title">
+        </label>
+        <label>City / country
+          <input name="city" placeholder="e.g. Mumbai, India">
+        </label>
+        <label>Phone
+          <input name="phone" type="tel" autocomplete="tel" placeholder="+91 98 7654 3210">
+        </label>
+        <label>Email
+          <input name="email" type="email" autocomplete="email" placeholder="hello@partner.com">
+        </label>
+        <label class="wide">Website
+          <input name="website" placeholder="www.partner.com">
+        </label>
+      </div>
+      <p class="form-error" id="form-error" role="alert" hidden></p>
+      <div class="d-actions">
+        <button type="submit" class="btn primary" id="save">Save partner files</button>
+        <button type="button" class="btn" id="cancel">Cancel</button>
+      </div>
+    </div>
+
+    <div id="step-upload" hidden>
+      <ol class="steps">
+        <li><strong>Two files were downloaded:</strong> <code id="f-json"></code> and <code id="f-logo"></code>. <button type="button" class="linkish" id="redownload">Download again</button></li>
+        <li><strong>Upload them to GitHub.</strong> The button opens the partners folder's upload page. Drag both files in, then click <em>Commit changes</em>.</li>
+        <li>The partner appears here and in the studio within about a minute. Reload this page to see it.</li>
+      </ol>
+      <div class="d-actions">
+        <a class="btn primary" id="gh-upload" target="_blank" rel="noopener">Open GitHub upload page ↗</a>
+        <button type="button" class="btn" id="copy-details">Copy details as text</button>
+        <button type="button" class="btn" id="done">Done</button>
+      </div>
+      <p class="d-note">No GitHub access? Use <em>Copy details as text</em> and send it, with the logo file, to whoever manages the site.</p>
+    </div>
+  </form>
+</dialog>
+
+<script src="assets/cobrand.js?v=20261029"></script>
+<script src="assets/partners.js?v=20261029"></script>
+</body>
+</html>

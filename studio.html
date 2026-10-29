@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Co-brand Studio</title>
+<meta name="description" content="Make partner-branded versions of Experiential Tales posters and brochures: partner logo × our logo, partnership line and contacts.">
+<meta name="theme-color" content="#011B36">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Poppins:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="assets/style.css?v=20261029">
+<link rel="stylesheet" href="assets/cobrand.css?v=20261029">
+</head>
+<body>
+<header class="masthead">
+  <div class="wrap masthead-inner">
+    <nav class="site-nav" aria-label="Site">
+      <a href="./">Events calendar</a>
+      <a href="partners.html">Partners</a>
+      <a href="studio.html" aria-current="page">Co-brand Studio</a>
+    </nav>
+    <p class="eyebrow">Experiential Tales · Co-brand Studio</p>
+    <h1>Co-brand <em>Studio</em></h1>
+    <p class="lede">Pick a design and an agent partner. The header becomes <strong>[partner logo] × Experiential Tales</strong>, and the footer carries the partnership line and whichever contacts you choose. Download as PNG, JPG or a print-ready PDF.</p>
+  </div>
+</header>
+
+<main class="wrap studio">
+  <form class="controls" id="controls" autocomplete="off" onsubmit="return false">
+    <fieldset>
+      <legend>1 · Design</legend>
+      <div class="design-list" id="designs"></div>
+      <div class="pages" id="pages" aria-label="Pages to include"></div>
+    </fieldset>
+
+    <fieldset>
+      <legend><label for="partner">2 · Partner</label></legend>
+      <select id="partner" class="field"><option value="">Loading partners…</option></select>
+      <p class="hint" id="partner-hint"><a href="partners.html#add">Add a new partner</a></p>
+    </fieldset>
+
+    <fieldset>
+      <legend>3 · What to show</legend>
+      <div class="checks">
+        <label><input type="checkbox" id="o-plogo" checked> Partner logo</label>
+        <div class="sub seg" role="radiogroup" aria-label="Partner logo backing">
+          <label><input type="radio" name="chip" value="light" checked> White chip</label>
+          <label><input type="radio" name="chip" value="dark"> Dark chip</label>
+          <label><input type="radio" name="chip" value="none"> No chip</label>
+        </div>
+        <label><input type="checkbox" id="o-ologo" checked> Our logo</label>
+        <label><input type="checkbox" id="o-line" checked> Partnership line</label>
+        <input type="text" id="o-line-text" class="sub field" aria-label="Partnership line wording">
+        <label><input type="checkbox" id="o-pcontacts" checked> Partner's contacts</label>
+        <label><input type="checkbox" id="o-ocontacts" checked> Our contacts</label>
+        <label><input type="checkbox" id="o-tagline"> Our tagline</label>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>4 · Download</legend>
+      <div class="downloads">
+        <button type="button" class="btn primary" id="dl-pdf">Download print PDF</button>
+        <button type="button" class="btn" id="dl-png">PNG</button>
+        <button type="button" class="btn" id="dl-jpg">JPG</button>
+      </div>
+      <p class="status" id="status" aria-live="polite"></p>
+    </fieldset>
+  </form>
+
+  <section class="preview" id="preview" aria-label="Preview"></section>
+</main>
+
+<footer class="wrap footer">
+  <p>The studio draws on clean versions of each design, with our logo and contact footer taken out. To add another poster or brochure, see the README's “Co-brand Studio” section.</p>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+<script src="assets/cobrand.js?v=20261029"></script>
+<script src="assets/studio.js?v=20261029"></script>
+</body>
+</html>

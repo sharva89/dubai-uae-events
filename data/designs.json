@@ -1,0 +1,82 @@
+{
+  "us": {
+    "name": "Experiential Tales",
+    "tagline": "B2B Destination Management Company for Travel Partners Worldwide",
+    "website": "www.exptales.com",
+    "email": "info@exptales.com",
+    "phones": ["+971 55 154 0785", "+63 968 154 0785"]
+  },
+  "designs": [
+    {
+      "id": "christmas-canva",
+      "title": "Christmas in Dubai",
+      "subtitle": "Canva · 3 posters",
+      "event": "christmas",
+      "width": 1080, "height": 1620,
+      "logo": "gold",
+      "palette": { "accent": "#D9B76A", "text": "#E9E2D2", "soft": "#D9B76A" },
+      "pages": [
+        { "label": "A Golden Christmas", "base": "cobrand/bases/canva-xmas-golden.jpg" },
+        { "label": "Lanterns & Markets", "base": "cobrand/bases/canva-xmas-lanterns.jpg" },
+        { "label": "Under Desert Skies", "base": "cobrand/bases/canva-xmas-desert.jpg" }
+      ],
+      "header": { "x": 140, "y": 40, "w": 800, "h": 150, "align": "center" },
+      "footer": { "x": 60, "y": 1448, "w": 960, "h": 142, "align": "center", "layout": "stack" }
+    },
+    {
+      "id": "christmas-desert-rgw",
+      "title": "Christmas Under Desert Skies",
+      "subtitle": "Canva · red, green & white",
+      "event": "christmas",
+      "width": 1080, "height": 1620,
+      "logo": "white",
+      "palette": { "accent": "#F8F6F5", "text": "#F8F6F5", "soft": "#E6DCD6" },
+      "pages": [
+        { "label": "Under Desert Skies", "base": "cobrand/bases/canva-xmas-desert-rgw.jpg" }
+      ],
+      "header": { "x": 190, "y": 36, "w": 700, "h": 160, "align": "center" },
+      "footer": { "x": 90, "y": 1424, "w": 900, "h": 120, "align": "center", "layout": "stack" }
+    },
+    {
+      "id": "christmas-express",
+      "title": "Christmas in Dubai",
+      "subtitle": "Adobe Express · 3 posters",
+      "event": "christmas",
+      "width": 1080, "height": 1620,
+      "pages": [
+        { "label": "City of Gold", "base": "cobrand/bases/express-xmas-city.jpg", "logo": "champagne",
+          "palette": { "accent": "#E8C988", "text": "#F6F1E7", "soft": "#CFC6B4" } },
+        { "label": "Markets & Lantern Light", "base": "cobrand/bases/express-xmas-souk.jpg", "logo": "brass",
+          "palette": { "accent": "#D9AA55", "text": "#F4EAD5", "soft": "#CBBF9F" } },
+        { "label": "Under Desert Skies", "base": "cobrand/bases/express-xmas-desert.jpg", "logo": "rosegold",
+          "palette": { "accent": "#E7B08A", "text": "#FBF3EA", "soft": "#D9C2B4" } }
+      ],
+      "header": { "x": 140, "y": 36, "w": 800, "h": 160, "align": "center" },
+      "footer": { "x": 96, "y": 1442, "w": 888, "h": 124, "align": "center", "layout": "stack" }
+    },
+    {
+      "id": "adipec-3pager",
+      "title": "ADIPEC 2026 brochure",
+      "subtitle": "A4 · 3 pages",
+      "event": "adipec",
+      "width": 1240, "height": 1754,
+      "logo": "amber",
+      "palette": { "accent": "#F2A541", "text": "#F7F3EA", "soft": "#B9C6D2" },
+      "header": { "x": 64, "y": 44, "w": 560, "h": 130, "align": "left" },
+      "pages": [
+        { "label": "The event", "base": "cobrand/bases/adipec-p1.jpg",
+          "footer": { "x": 640, "y": 1712, "w": 536, "h": 32, "align": "right", "layout": "line",
+                      "palette": { "accent": "#8FA3B5", "text": "#8FA3B5", "soft": "#8FA3B5" } } },
+        { "label": "Abu Dhabi & Dubai", "base": "cobrand/bases/adipec-p2.jpg",
+          "header": { "x": 64, "y": 44, "w": 560, "h": 130, "align": "left", "plate": "rgba(7,26,46,0.62)" },
+          "footer": { "x": 64, "y": 1668, "w": 1112, "h": 78, "align": "left", "layout": "stack" } },
+        { "label": "About us", "base": "cobrand/bases/adipec-p3.jpg",
+          "header": { "x": 64, "y": 44, "w": 560, "h": 130, "align": "left", "plate": "rgba(7,26,46,0.62)" },
+          "footer": { "x": 64, "y": 1528, "w": 1112, "h": 202, "align": "left", "layout": "columns",
+                      "panel": { "fill": "#F2A541", "radius": 18 },
+                      "title": "Talk to us",
+                      "palette": { "accent": "#071A2E", "text": "#071A2E", "soft": "#3A3226" } } }
+      ]
+    }
+  ]
+}
