@@ -72,6 +72,12 @@ a { color: inherit; }
 .chip .n { color: var(--ink-soft); font-variant-numeric: tabular-nums; }
 .chip[aria-pressed="false"] { opacity: .45; }
 .chip[aria-pressed="false"] .sw { background: transparent; box-shadow: inset 0 0 0 1.5px var(--c); }
+.chip.posters { --c: var(--gold); border-color: var(--gold); margin-left: auto; }
+.chip.posters .sw { border-radius: 2px; }
+.chip.posters[aria-pressed="false"] { opacity: 1; }
+.chip.posters[aria-pressed="true"] { background: var(--gold); color: var(--midnight); }
+.chip.posters[aria-pressed="true"] .n { color: var(--midnight); }
+.chip.posters[aria-pressed="true"] .sw { background: var(--midnight); box-shadow: none; }
 .finders { display: flex; gap: 8px; flex-wrap: wrap; }
 .finders select, .finders input { font: 400 13.5px var(--body); color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 7px 10px; min-width: 0; }
 .finders input { width: 210px; max-width: 100%; }

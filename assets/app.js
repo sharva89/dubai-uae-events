@@ -35,7 +35,7 @@ const MON = MONTHS.map((m) => m.slice(0, 3));
 const DOW = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const DAY = 86400000;
 
-const state = { view: "calendar", month: 0, types: new Set(Object.keys(CONFIG.types)), city: "", q: "" };
+const state = { view: "calendar", month: 0, types: new Set(Object.keys(CONFIG.types)), city: "", q: "", posters: false };
 let EVENTS = [];
 let byId = {};
 let current = null;
@@ -111,6 +111,7 @@ const overlaps = (e, a, b) => e.start <= b && e.end >= a;
 
 function matches(e) {
   if (!state.types.has(e.type)) return false;
+  if (state.posters && !e.flyers.length) return false;
   if (state.city && !e.city.includes(state.city)) return false;
   if (state.q) {
     const hay = `${e.event} ${e.venue} ${e.city} ${e.about} ${e.details} ${e.type}`.toLowerCase();
@@ -141,7 +142,9 @@ function buildFilters() {
   EVENTS.forEach((e) => (counts[e.type] = (counts[e.type] || 0) + 1));
   $("type-filters").replaceChildren(...Object.entries(CONFIG.types).map(([t, cfg]) =>
     el("button", { type: "button", class: `chip ${cfg.cls}`, "aria-pressed": "true", "data-type": t, onclick: (ev) => toggleType(t, ev) },
-      el("span", { class: "sw" }), cfg.label, el("span", { class: "n" }, String(counts[t] || 0)))));
+      el("span", { class: "sw" }), cfg.label, el("span", { class: "n" }, String(counts[t] || 0)))),
+    el("button", { type: "button", class: "chip posters", id: "posters-chip", "aria-pressed": "false", onclick: togglePosters },
+      el("span", { class: "sw" }), "Posters uploaded", el("span", { class: "n" }, String(EVENTS.filter((e) => e.flyers.length).length))));
 
   const cities = new Set();
   EVENTS.forEach((e) => e.city.split(/\s*[·\/]\s*/).forEach((c) => c && cities.add(c)));
@@ -161,6 +164,19 @@ function toggleType(t, ev) {
   else state.types.add(t);
   document.querySelectorAll("#type-filters .chip").forEach((c) => c.setAttribute("aria-pressed", String(state.types.has(c.dataset.type))));
   render();
+}
+
+function togglePosters() {
+  state.posters = !state.posters;
+  $("posters-chip").setAttribute("aria-pressed", String(state.posters));
+  // Jump the calendar to the first month that has posters
+  const first = state.posters && EVENTS.filter((e) => e.flyers.length).sort((a, b) => a.start - b.start)[0];
+  if (first) {
+    const r0 = monthRange(0).first, s = first.start < r0 ? r0 : first.start;
+    state.month = (s.getFullYear() - r0.getFullYear()) * 12 + s.getMonth() - r0.getMonth();
+  }
+  render();
+  if (state.view === "list" && first) goMonth(state.month, true);
 }
 
 function buildMonths() {
@@ -408,7 +424,8 @@ async function init() {
   let t;
   $("search").addEventListener("input", (ev) => { clearTimeout(t); t = setTimeout(() => { state.q = ev.target.value.trim(); render(); }, 150); });
   $("reset").addEventListener("click", () => {
-    state.types = new Set(Object.keys(CONFIG.types)); state.city = ""; state.q = "";
+    state.types = new Set(Object.keys(CONFIG.types)); state.city = ""; state.q = ""; state.posters = false;
+    $("posters-chip").setAttribute("aria-pressed", "false");
     $("city").value = ""; $("search").value = "";
     document.querySelectorAll("#type-filters .chip").forEach((c) => c.setAttribute("aria-pressed", "true"));
     render();
