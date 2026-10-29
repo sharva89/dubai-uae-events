@@ -72,7 +72,7 @@ a { color: inherit; }
 .chip .n { color: var(--ink-soft); font-variant-numeric: tabular-nums; }
 .chip[aria-pressed="false"] { opacity: .45; }
 .chip[aria-pressed="false"] .sw { background: transparent; box-shadow: inset 0 0 0 1.5px var(--c); }
-.chip.posters { --c: var(--gold); border-color: var(--gold); margin-left: auto; }
+.chip.posters { --c: var(--gold); border-color: var(--gold); }
 .chip.posters .sw { border-radius: 2px; }
 .chip.posters[aria-pressed="false"] { opacity: 1; }
 .chip.posters[aria-pressed="true"] { background: var(--gold); color: var(--midnight); }
